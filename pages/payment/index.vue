@@ -1,6 +1,6 @@
 <template>
     <div class="bg-prim-5">
-        <div class="xl:flex xl:gap-5 mx-40 ">
+        <div class="xl:flex xl:gap-5 mx-[5%] ">
             <div class="w-full xl:w-2/3 pt-5">
                 <div class="w-full bg-white rounded-md border-prim-10 shadow border p-4 mb-5">
                     <strong>Billing cycle</strong> <br>
