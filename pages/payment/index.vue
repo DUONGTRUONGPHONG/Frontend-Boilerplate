@@ -22,8 +22,11 @@
                                 <a-radio :value="2" />
                                 <div class="w-full">
                                     <div class="flex justify-between">
-                                        <strong>Yearly<a-tag color="cyan" style="margin-left: 6px;border-radius: 22px;
-                                        padding:0 0.5rem;">
+                                        <strong>Yearly<a-tag
+                                            color="cyan"
+                                            style="margin-left: 6px;border-radius: 22px;
+                                        padding:0 0.5rem;"
+                                        >
                                             Save $72
                                         </a-tag></strong>
                                         <span class="text-[#26553f]">Save $72</span>
@@ -58,7 +61,9 @@
                         Shopify bill</span>
                     <a-form
                         class="!mt-4"
+                        :form="formBusiness"
                         layout="vertical"
+                        @submit="handleSubmitBusiness"
                     >
                         <a-form-item label="Country/region">
                             <a-input value="Vietnam" disabled />
@@ -66,14 +71,41 @@
                         </a-form-item>
                         <div class="flex gap-3">
                             <a-form-item label="First name" class="w-1/2">
-                                <a-input value="Vietnam" />
+                                <a-input
+                                    v-decorator="[
+                                        'firstName',
+                                        { rules: [
+                                            { required: true, message: 'Please input your First name!' },
+                                            {pattern:/^(?!.* {2})[^\d!@#$%^&*()+.=_-]{2,}$/g,
+                                             message:'First name is in wrong format'}
+                                        ] },
+                                    ]"
+                                />
                             </a-form-item>
                             <a-form-item label="Last name" class="w-1/2">
-                                <a-input value="Vietnam" />
+                                <a-input
+                                    v-decorator="[
+                                        'lastName',
+                                        { rules: [
+                                            { required: true, message: 'Please input your Last name!' },
+                                            {pattern:/^(?!.* {2})[^\d!@#$%^&*()+.=_-]{2,}$/g,
+                                             message:'Last name is in wrong format'}
+                                        ] },
+                                    ]"
+                                />
                             </a-form-item>
                         </div>
                         <a-form-item label="Address">
-                            <a-input-search value="Vietnam" />
+                            <a-input-search
+                                v-decorator="[
+                                    'address',
+                                    { rules: [
+                                        { required: true, message: 'Please input your address!' },
+                                        {pattern:/^(?!.* {2})[^!@#$%^&*()+.=_]{2,}$/g,
+                                         message:'Address is in wrong format'}
+                                    ] },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="Apartment, suite, etc.">
                             <a-input value="Vietnam" />
@@ -87,9 +119,18 @@
                             </a-form-item>
                         </div>
                         <a-form-item label="Phone">
-                            <a-input value="Vietnam" />
-                            <span>We'll use this if we need to contect you.</span>
+                            <a-input
+                                v-decorator="[
+                                    'phone',
+                                    { rules: [
+                                        { required: true, message: 'Please input your phone number!' },
+                                        {pattern:/^0\d{9}$/,
+                                         message:'Phone number is in wrong format'}
+                                    ] },
+                                ]"
+                            />
                         </a-form-item>
+                        <span>We'll use this if we need to contect you.</span>
                         <a-form-item>
                             <div class="w-full flex justify-end gap-3 mt-4">
                                 <!-- <button
@@ -126,20 +167,49 @@
                                     <strong>Credit or debit card</strong></span>
                                 <div v-if="valuePayment === 1" class="m-4">
                                     <a-form
+                                        :form="form"
                                         layout="vertical"
+                                        @submit="handleSubmitPayment"
                                     >
                                         <strong>Credit card information</strong>
                                         <a-form-item label="Card number">
-                                            <a-input class="!pr-9" />
+                                            <a-input
+                                                v-decorator="[
+                                                    'cardNumder',
+                                                    { rules: [{ required: true, message: 'Please input your Card number!' },
+                                                              {pattern:/^\d{16}$|^\d{19}$/,
+                                                               message:'Card number must have a length of 16 or 19'}
+                                                    ] },
+                                                ]"
+                                                class="!pr-9"
+                                            />
                                             <a-icon class="absolute right-3 top-1/2 -translate-y-1/2" type="lock" />
                                         </a-form-item>
                                         <div class="flex gap-3">
                                             <a-form-item label="Expires" class="w-1/2">
-                                                <a-input placeholder="MM/YY" class="!pr-9" />
-                                                <a-icon class="absolute right-3 top-1/2 -translate-y-1/2" type="info-circle" />
+                                                <a-date-picker
+                                                    v-decorator="[
+                                                        'expires',
+                                                        { rules: [{ required: true, message: 'Please input your Expires!' }] },
+                                                    ]"
+                                                    placeholder="MM/YY"
+                                                    format="MM/YY"
+                                                >
+                                                    <template #suffixIcon>
+                                                        <a-icon type="info-circle" />
+                                                    </template>
+                                                </a-date-picker>
                                             </a-form-item>
                                             <a-form-item label="CVV" class="w-1/2">
-                                                <a-input value="Vietnam" />
+                                                <a-input
+                                                    v-decorator="[
+                                                        'cvv',
+                                                        { rules: [{ required: true, message: 'Please input your CVV!' },
+                                                                  { pattern:/^\d{3}$/, message: 'CVV must have length 3' }
+                                                        ] },
+                                                    ]"
+                                                    value="Vietnam"
+                                                />
                                             </a-form-item>
                                         </div>
                                         <strong>Billing address</strong>
@@ -148,14 +218,41 @@
                                         </a-form-item>
                                         <div class="flex gap-3">
                                             <a-form-item label="First name" class="w-1/2">
-                                                <a-input value="Vietnam" />
+                                                <a-input
+                                                    v-decorator="[
+                                                        'firstName',
+                                                        { rules: [
+                                                            { required: true, message: 'Please input your First name!' },
+                                                            {pattern:/^(?!.* {2})[^\d!@#$%^&*()+.=_-]{2,}$/g,
+                                                             message:'First name is in wrong format'}
+                                                        ] },
+                                                    ]"
+                                                />
                                             </a-form-item>
                                             <a-form-item label="Last name" class="w-1/2">
-                                                <a-input value="Vietnam" />
+                                                <a-input
+                                                    v-decorator="[
+                                                        'lastName',
+                                                        { rules: [
+                                                            { required: true, message: 'Please input your Last name!' },
+                                                            {pattern:/^(?!.* {2})[^\d!@#$%^&*()+.=_-]{2,}$/g,
+                                                             message:'Last name is in wrong format'}
+                                                        ] },
+                                                    ]"
+                                                />
                                             </a-form-item>
                                         </div>
                                         <a-form-item label="Address">
-                                            <a-input-search value="Vietnam" />
+                                            <a-input-search
+                                                v-decorator="[
+                                                    'address',
+                                                    { rules: [
+                                                        { required: true, message: 'Please input your address!' },
+                                                        {pattern:/^(?!.* {2})[^!@#$%^&*()+.=_]{2,}$/g,
+                                                         message:'Address is in wrong format'}
+                                                    ] },
+                                                ]"
+                                            />
                                         </a-form-item>
                                         <a-form-item label="Apartment, suite, etc.">
                                             <a-input value="Vietnam" />
@@ -169,7 +266,16 @@
                                             </a-form-item>
                                         </div>
                                         <a-form-item label="Phone">
-                                            <a-input value="Vietnam" />
+                                            <a-input
+                                                v-decorator="[
+                                                    'phone',
+                                                    { rules: [
+                                                        { required: true, message: 'Please input your phone number!' },
+                                                        {pattern:/^0\d{9}$/,
+                                                         message:'Phone number is in wrong format'}
+                                                    ] },
+                                                ]"
+                                            />
                                             <span>We'll use this if we need to contect you.</span>
                                         </a-form-item>
                                         <a-form-item>
@@ -185,6 +291,7 @@
                                                     style="color: white; background-color: rgb(59, 63, 63);
                              border: none;"
                                                     type="primary"
+                                                    html-type="submit"
                                                 >
                                                     Pay
                                                 </a-button>
@@ -280,10 +387,27 @@
                 valuePayment: 1,
                 sidebarVisible: false,
                 showPayment: false,
+                form: this.$form.createForm(this, { name: 'payment' }),
+                formBusiness: this.$form.createForm(this, { name: 'Business' }),
             };
         },
-
         methods: {
+            handleSubmitPayment(e) {
+                e.preventDefault();
+                this.form.validateFields((err, values) => {
+                    if (!err) {
+                        console.log('Received values of form: ', values);
+                    }
+                });
+            },
+            handleSubmitBusiness(e) {
+                e.preventDefault();
+                this.formBusiness.validateFields((err, values) => {
+                    if (!err) {
+                        console.log('Received values of form: ', values);
+                    }
+                });
+            },
         },
     };
 </script>
