@@ -11,22 +11,22 @@
                     <div class="w-full bg-white rounded-md border-prim-10 border shadow mt-4">
                         <a-radio-group v-model="valueBilling" class="w-full">
                             <div
-                                :class="[valueBilling === 1 ?'bg-prim-10':'',
+                                :class="[valueBilling === 25 ?'bg-prim-10':'',
                                          'w-full flex gap-2 p-4 border-b border-prim-10 items-center rounded-t-md cursor-pointer']"
-                                @click="valueBilling=1"
+                                @click="valueBilling=25"
                             >
-                                <a-radio :value="1" />
+                                <a-radio :value="25" />
                                 <div class="">
                                     <h5>Monthly</h5>
                                     <p>Pay $25/month</p>
                                 </div>
                             </div>
                             <div
-                                :class="[valueBilling === 2 ?'bg-prim-10':'',
+                                :class="[valueBilling === 228 ?'bg-prim-10':'',
                                          'w-full flex gap-2 p-4 items-center rounded-b-md cursor-pointer']"
-                                @click="valueBilling=2"
+                                @click="valueBilling=228"
                             >
-                                <a-radio :value="2" />
+                                <a-radio :value="228" />
                                 <div class="w-full">
                                     <div class="flex justify-between">
                                         <div class="flex">
@@ -261,8 +261,8 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            <h5>$25.00</h5>
-                            <p>billed every 30 day</p>
+                            <h5>${{valueBilling.toFixed(2)}}</h5>
+                            <p>billed every {{valueBilling===25 ? '30 day':'1 year'}}</p>
                         </div>
                     </div>
                     <div
@@ -286,7 +286,7 @@
                     <div class="p-4">
                         <div class="flex justify-between mb-4">
                             <h5>Total</h5>
-                            <h5>$25.00 USD + tax</h5>
+                            <h5>${{valueBilling.toFixed(2)}} USD + tax</h5>
                         </div>
                         <a-button block disabled>
                             Subscribe
@@ -307,7 +307,7 @@
         auth: false,
         data() {
             return {
-                valueBilling: 1,
+                valueBilling: 25,
                 valuePayment: 1,
                 sidebarVisible: false,
                 showPayment: false,
