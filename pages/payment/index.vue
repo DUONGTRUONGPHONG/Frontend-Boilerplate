@@ -274,7 +274,7 @@
                         <a-icon v-else type="down" />
                     </div>
                     <div class="item" :style="{ 'max-height': showPlandetail ? '500px' : '0' }">
-                        <div class="p-4 bg-prim-5  border-y border-prim-10 item">
+                        <div class="p-4 bg-prim-5  border-y border-prim-10">
                             <ul style="list-style: inside;">
                                 <li><strong>2 staff members</strong></li>
                                 <li>Up to <strong>1,000 locations</strong></li>
