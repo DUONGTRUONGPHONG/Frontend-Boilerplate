@@ -127,13 +127,13 @@
                         <a-radio-group v-model="valuePayment" class="w-full">
                             <div class="w-full bg-white rounded-md border-prim-10 border shadow mt-4">
                                 <span
-                                    :class="[valuePayment === 1 ?'bg-prim-10':'',
+                                    :class="[valuePayment === 'credit' ?'bg-prim-10':'',
                                              'flex items-center gap-2 p-4 rounded-t-md cursor-pointer']"
-                                    @click="valuePayment=1"
+                                    @click="valuePayment='credit'"
                                 >
-                                    <a-radio :value="1" />
+                                    <a-radio :value="'credit'" />
                                     <h5>Credit or debit card</h5></span>
-                                <div class="item" :style="{ 'max-height': valuePayment === 1 ? '1500px' : '0' }">
+                                <div class="item" :style="{ 'max-height': valuePayment === 'credit' ? '1500px' : '0' }">
                                     <div class="m-4">
                                         <a-form-model
                                             ref="form"
@@ -216,19 +216,19 @@
                             </div>
                             <div class="w-full bg-white rounded-md border-prim-10 border shadow mt-4">
                                 <span
-                                    :class="[valuePayment === 2 ?'bg-prim-10':'',
+                                    :class="[valuePayment === 'paypal' ?'bg-prim-10':'',
                                              'flex items-center gap-2 p-4 rounded-t-md cursor-pointer']"
-                                    @click="valuePayment=2"
+                                    @click="valuePayment='paypal'"
                                 >
-                                    <a-radio :value="2" />
+                                    <a-radio :value="'paypal'" />
                                     <font-awesome-icon icon="paypal" style="color: #22deec;" />
                                     <span>
                                         <strong class="text-prim-100"><i>Pay</i></strong><strong class="text-prim-90"><i>Pal</i></strong>
                                     </span>
                                 </span>
                                 <div
-                                    :style="{ 'max-height': valuePayment === 2 ? '1000px' : '0' }"
-                                    :class="[valuePayment === 2 ?'m-4':'', 'item']"
+                                    :style="{ 'max-height': valuePayment === 'paypal' ? '1000px' : '0' }"
+                                    :class="[valuePayment === 'paypal' ?'m-4':'', 'item']"
                                 >
                                     <span>Connect your PayPal account and use it to pay your bills. You'll be
                                         redirected to PayPal to add your billing information.</span>
@@ -308,7 +308,7 @@
         data() {
             return {
                 valueBilling: 25,
-                valuePayment: 1,
+                valuePayment: 'credit',
                 sidebarVisible: false,
                 showPayment: false,
                 showPlandetail: true,
