@@ -3,7 +3,7 @@
         <div class="xl:flex xl:gap-5 mx-[5%] ">
             <div class="w-full xl:w-2/3 pt-5">
                 <div class="w-full bg-white rounded-md border-prim-10 shadow border p-4 mb-5">
-                    <strong>Billing cycle</strong>
+                    <h5>Billing cycle</h5>
                     <p>
                         Choose how often you'd like to be billed.
                         You can cancel anytime
@@ -12,27 +12,32 @@
                         <a-radio-group v-model="valueBilling" class="w-full">
                             <div
                                 :class="[valueBilling === 1 ?'bg-prim-10':'',
-                                         'w-full flex gap-2 p-4 border-b border-prim-10 items-center rounded-t-md']"
+                                         'w-full flex gap-2 p-4 border-b border-prim-10 items-center rounded-t-md cursor-pointer']"
+                                @click="valueBilling=1"
                             >
                                 <a-radio :value="1" />
                                 <div class="">
-                                    <strong>Monthly</strong>
+                                    <h5>Monthly</h5>
                                     <p>Pay $25/month</p>
                                 </div>
                             </div>
-                            <div :class="[valueBilling === 2 ?'bg-prim-10':'','w-full flex gap-2 p-4 items-center rounded-b-md']">
+                            <div
+                                :class="[valueBilling === 2 ?'bg-prim-10':'',
+                                         'w-full flex gap-2 p-4 items-center rounded-b-md cursor-pointer']"
+                                @click="valueBilling=2"
+                            >
                                 <a-radio :value="2" />
                                 <div class="w-full">
                                     <div class="flex justify-between">
-                                        <p>
-                                            <strong>Yearly</strong><a-tag
+                                        <div class="flex">
+                                            <h5>Yearly</h5><a-tag
                                                 color="cyan"
                                                 style="margin-left: 6px;border-radius: 22px;
                                         padding:0 0.5rem;"
                                             >
                                                 Save $72
                                             </a-tag>
-                                        </p>
+                                        </div>
                                         <span class="text-[#26553f]">Save $72</span>
                                     </div>
                                     <span>$19/month - pay $228 ($19 x 12 months)</span>
@@ -54,7 +59,7 @@
                     </div>
                 </div>
                 <div class="w-full bg-white rounded-md border-prim-10 shadow border p-4 mb-5">
-                    <strong>Business address</strong>
+                    <h5>Business address</h5>
                     <p>
                         Used on customer order confirmations and your
                         Shopify bill
@@ -112,7 +117,7 @@
                 </div>
                 <div class="w-full bg-white rounded-md border-prim-10 shadow border p-4">
                     <div class="flex justify-between">
-                        <strong>Payment method</strong>
+                        <h5>Payment method</h5>
                         <a-button v-if="!showPayment" @click="showPayment = !showPayment">
                             Add
                         </a-button>
@@ -121,93 +126,100 @@
                         <span>Choose how you'd like to pay for Shopify</span>
                         <a-radio-group v-model="valuePayment" class="w-full">
                             <div class="w-full bg-white rounded-md border-prim-10 border shadow mt-4">
-                                <span :class="[valuePayment === 1 ?'bg-prim-10':'','flex items-center gap-2 p-4 rounded-t-md']">
-                                    <a-radio :value="1" />
-                                    <strong>Credit or debit card</strong></span>
-                                <div
-                                    :style="{ 'max-height': valuePayment === 1 ? '1500px' : '0' }"
-                                    :class="[valuePayment === 1 ?'m-4':'', 'mx-4 item']"
+                                <span
+                                    :class="[valuePayment === 1 ?'bg-prim-10':'',
+                                             'flex items-center gap-2 p-4 rounded-t-md cursor-pointer']"
+                                    @click="valuePayment=1"
                                 >
-                                    <a-form-model
-                                        ref="form"
-                                        :model="form"
-                                        :rules="rules"
-                                        layout="vertical"
-                                    >
-                                        <strong>Credit card information</strong>
-                                        <a-form-model-item label="Card number" prop="cardNumder">
-                                            <a-input
-                                                v-model="form.cardNumber"
-                                                class="!pr-9"
-                                            />
-                                            <a-icon class="absolute right-3 top-1/2 -translate-y-1/2" type="lock" />
-                                        </a-form-model-item>
-                                        <div class="flex gap-3">
-                                            <a-form-model-item label="Expires" class="w-1/2" prop="expires">
-                                                <a-date-picker
-                                                    v-model="form.expires"
-                                                    placeholder="MM/YY"
-                                                    format="MM/YY"
-                                                >
-                                                    <template #suffixIcon>
-                                                        <a-icon type="info-circle" />
-                                                    </template>
-                                                </a-date-picker>
-                                            </a-form-model-item>
-                                            <a-form-model-item label="CVV" class="w-1/2" prop="cvv">
+                                    <a-radio :value="1" />
+                                    <h5>Credit or debit card</h5></span>
+                                <div class="item" :style="{ 'max-height': valuePayment === 1 ? '1500px' : '0' }">
+                                    <div class="m-4">
+                                        <a-form-model
+                                            ref="form"
+                                            :model="form"
+                                            :rules="rules"
+                                            layout="vertical"
+                                        >
+                                            <h5>Credit card information</h5>
+                                            <a-form-model-item label="Card number" prop="cardNumder">
                                                 <a-input
-                                                    v-model="form.cvv"
-                                                    value="Vietnam"
+                                                    v-model="form.cardNumber"
+                                                    class="!pr-9"
                                                 />
+                                                <a-icon class="absolute right-3 top-1/2 -translate-y-1/2" type="lock" />
                                             </a-form-model-item>
-                                        </div>
-                                        <strong>Billing address</strong>
-                                        <a-form-model-item label="Country/region">
-                                            <a-input value="Vietnam" />
-                                        </a-form-model-item>
-                                        <div class="flex gap-3">
-                                            <a-form-model-item label="First name" class="w-1/2" prop="firstName">
-                                                <a-input v-model="form.firstName" />
-                                            </a-form-model-item>
-                                            <a-form-model-item label="Last name" class="w-1/2" prop="lastName">
-                                                <a-input v-model="form.lastName" />
-                                            </a-form-model-item>
-                                        </div>
-                                        <a-form-model-item label="Address" prop="address">
-                                            <a-input-search v-model="form.address" />
-                                        </a-form-model-item>
-                                        <a-form-model-item label="Apartment, suite, etc.">
-                                            <a-input value="Vietnam" />
-                                        </a-form-model-item>
-                                        <div class="flex gap-3">
-                                            <a-form-model-item label="City" class="w-1/2">
-                                                <a-input value="Vietnam" />
-                                            </a-form-model-item>
-                                            <a-form-model-item label="Postal code" class="w-1/2">
-                                                <a-input value="Vietnam" />
-                                            </a-form-model-item>
-                                        </div>
-                                        <a-form-model-item label="Phone" prop="phone">
-                                            <a-input v-model="form.phone" />
-                                        </a-form-model-item>
-                                        <span>We'll use this if we need to contect you.</span>
-                                        <a-form-model-item>
-                                            <div class="w-full flex justify-end gap-3 mt-4">
-                                                <a-button
-                                                    style="color: white; background-color: rgb(59, 63, 63);
-                             border: none;"
-                                                    type="primary"
-                                                    @click="handleSubmitPayment"
-                                                >
-                                                    Pay
-                                                </a-button>
+                                            <div class="flex gap-3">
+                                                <a-form-model-item label="Expires" class="w-1/2" prop="expires">
+                                                    <a-date-picker
+                                                        v-model="form.expires"
+                                                        placeholder="MM/YY"
+                                                        format="MM/YY"
+                                                    >
+                                                        <template #suffixIcon>
+                                                            <a-icon type="info-circle" />
+                                                        </template>
+                                                    </a-date-picker>
+                                                </a-form-model-item>
+                                                <a-form-model-item label="CVV" class="w-1/2" prop="cvv">
+                                                    <a-input
+                                                        v-model="form.cvv"
+                                                        value="Vietnam"
+                                                    />
+                                                </a-form-model-item>
                                             </div>
-                                        </a-form-model-item>
-                                    </a-form-model>
+                                            <h5>Billing address</h5>
+                                            <a-form-model-item label="Country/region">
+                                                <a-input value="Vietnam" />
+                                            </a-form-model-item>
+                                            <div class="flex gap-3">
+                                                <a-form-model-item label="First name" class="w-1/2" prop="firstName">
+                                                    <a-input v-model="form.firstName" />
+                                                </a-form-model-item>
+                                                <a-form-model-item label="Last name" class="w-1/2" prop="lastName">
+                                                    <a-input v-model="form.lastName" />
+                                                </a-form-model-item>
+                                            </div>
+                                            <a-form-model-item label="Address" prop="address">
+                                                <a-input-search v-model="form.address" />
+                                            </a-form-model-item>
+                                            <a-form-model-item label="Apartment, suite, etc.">
+                                                <a-input value="Vietnam" />
+                                            </a-form-model-item>
+                                            <div class="flex gap-3">
+                                                <a-form-model-item label="City" class="w-1/2">
+                                                    <a-input value="Vietnam" />
+                                                </a-form-model-item>
+                                                <a-form-model-item label="Postal code" class="w-1/2">
+                                                    <a-input value="Vietnam" />
+                                                </a-form-model-item>
+                                            </div>
+                                            <a-form-model-item label="Phone" prop="phone">
+                                                <a-input v-model="form.phone" />
+                                            </a-form-model-item>
+                                            <span>We'll use this if we need to contect you.</span>
+                                            <a-form-model-item>
+                                                <div class="w-full flex justify-end gap-3 mt-4">
+                                                    <a-button
+                                                        style="color: white; background-color: rgb(59, 63, 63);
+                             border: none;"
+                                                        type="primary"
+                                                        @click="handleSubmitPayment"
+                                                    >
+                                                        Pay
+                                                    </a-button>
+                                                </div>
+                                            </a-form-model-item>
+                                        </a-form-model>
+                                    </div>
                                 </div>
                             </div>
                             <div class="w-full bg-white rounded-md border-prim-10 border shadow mt-4">
-                                <span :class="[valuePayment === 2 ?'bg-prim-10':'','flex items-center gap-2 p-4 rounded-t-md']">
+                                <span
+                                    :class="[valuePayment === 2 ?'bg-prim-10':'',
+                                             'flex items-center gap-2 p-4 rounded-t-md cursor-pointer']"
+                                    @click="valuePayment=2"
+                                >
                                     <a-radio :value="2" />
                                     <font-awesome-icon icon="paypal" style="color: #22deec;" />
                                     <span>
@@ -234,7 +246,7 @@
             <div class="w-full mt-5 xl:w-1/3">
                 <div class="w-full bg-white rounded-md border-prim-10 shadow border">
                     <div class="flex justify-between items-center  p-4">
-                        <strong>Basic Shopify plan</strong>
+                        <h5>Basic Shopify plan</h5>
                         <span class="cursor-pointer text-prim-90">Change plan</span>
                     </div>
                     <p class=" px-4">
@@ -244,31 +256,37 @@
                         <div class="flex gap-2">
                             <a-checkbox indeterminate />
                             <div class="">
-                                <strong>Today</strong>
+                                <h5>Today</h5>
                                 <p>Ongoing plan</p>
                             </div>
                         </div>
                         <div class="text-right">
-                            <strong>$25.00</strong>
+                            <h5>$25.00</h5>
                             <p>billed every 30 day</p>
                         </div>
                     </div>
-                    <div class="border-y border-prim-10 flex justify-between p-4 items-center">
-                        <strong>Plan details</strong>
-                        <a-icon type="up" />
+                    <div
+                        class="border-y border-prim-10 flex justify-between p-4 items-center cursor-pointer"
+                        @click="showPlandetail=!showPlandetail"
+                    >
+                        <h5>Plan details</h5>
+                        <a-icon v-if="showPlandetail" type="up" />
+                        <a-icon v-else type="down" />
                     </div>
-                    <div class="bg-prim-5 p-4 border-y border-prim-10 ">
-                        <ul style="list-style: inside;">
-                            <li><strong>2 staff members</strong></li>
-                            <li>Up to <strong>1,000 locations</strong></li>
-                            <li>Shipping discounts</li>
-                            <li>Shopify POS for markets and events</li>
-                        </ul>
+                    <div class="item" :style="{ 'max-height': showPlandetail ? '500px' : '0' }">
+                        <div class="p-4 bg-prim-5  border-y border-prim-10 item">
+                            <ul style="list-style: inside;">
+                                <li><strong>2 staff members</strong></li>
+                                <li>Up to <strong>1,000 locations</strong></li>
+                                <li>Shipping discounts</li>
+                                <li>Shopify POS for markets and events</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="p-4">
                         <div class="flex justify-between mb-4">
-                            <strong>Total</strong>
-                            <strong>$25.00 USD + tax</strong>
+                            <h5>Total</h5>
+                            <h5>$25.00 USD + tax</h5>
                         </div>
                         <a-button block disabled>
                             Subscribe
@@ -293,6 +311,7 @@
                 valuePayment: 1,
                 sidebarVisible: false,
                 showPayment: false,
+                showPlandetail: true,
                 form: {},
                 formBusiness: {},
                 rules: {
@@ -368,7 +387,7 @@
     overflow: hidden;
   transition: max-height 0.5s ease;
 }
-.payment p{
+.payment p,h5{
     margin: 0 ;
 }
 </style>
