@@ -139,7 +139,7 @@
                                             layout="vertical"
                                         >
                                             <h5>Credit card information</h5>
-                                            <a-form-model-item label="Card number" prop="cardNumder">
+                                            <a-form-model-item label="Card number" prop="cardNumber">
                                                 <a-input
                                                     v-model="form.cardNumber"
                                                     class="!pr-9"
@@ -345,7 +345,7 @@
                         [{ required: true, message: 'Please input your CVV!' },
                          { pattern: /^\d{3}$/, message: 'CVV must have length 3' },
                         ],
-                    cardNumder:
+                    cardNumber:
                         [{ required: true, message: 'Please input your Card number!' },
                          {
                              pattern: /^\d{16}$|^\d{19}$/,
