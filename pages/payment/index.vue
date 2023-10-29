@@ -29,11 +29,10 @@
                                 <a-radio :value="228" />
                                 <div class="w-full">
                                     <div class="flex justify-between">
-                                        <div class="flex">
+                                        <div class="flex gap-2">
                                             <h5>Yearly</h5><a-tag
                                                 color="cyan"
-                                                style="margin-left: 6px;border-radius: 22px;
-                                        padding:0 0.5rem;"
+                                                class="!rounded-xl !py-0 !px-[0.5rem]"
                                             >
                                                 Save $72
                                             </a-tag>
@@ -50,8 +49,7 @@
                             Cancel
                         </a-button>
                         <a-button
-                            style="color: white; background-color: rgb(59, 63, 63);
-                                 border: none;"
+                            :class="[styleButton]"
                             type="primary"
                         >
                             Confirm
@@ -104,8 +102,7 @@
                         <a-form-model-item>
                             <div class="w-full flex justify-end gap-3 mt-4">
                                 <a-button
-                                    style="color: white; background-color: rgb(59, 63, 63);
-                                 border: none;"
+                                    :class="[styleButton]"
                                     type="primary"
                                     @click="handleSubmitBusiness"
                                 >
@@ -133,7 +130,7 @@
                                 >
                                     <a-radio :value="'credit'" />
                                     <h5>Credit or debit card</h5></span>
-                                <div class="item" :style="{ 'max-height': valuePayment === 'credit' ? '1500px' : '0' }">
+                                <div :class="[valuePayment === 'credit' ?'max-h-[1000px]':'max-h-0','item']">
                                     <div class="m-4">
                                         <a-form-model
                                             ref="form"
@@ -201,8 +198,7 @@
                                             <a-form-model-item>
                                                 <div class="w-full flex justify-end gap-3 mt-4">
                                                     <a-button
-                                                        style="color: white; background-color: rgb(59, 63, 63);
-                             border: none;"
+                                                        :class="[styleButton]"
                                                         type="primary"
                                                         @click="handleSubmitPayment"
                                                     >
@@ -221,21 +217,19 @@
                                     @click="valuePayment='paypal'"
                                 >
                                     <a-radio :value="'paypal'" />
-                                    <font-awesome-icon icon="paypal" style="color: #22deec;" />
                                     <span>
                                         <strong class="text-prim-100"><i>Pay</i></strong><strong class="text-prim-90"><i>Pal</i></strong>
                                     </span>
                                 </span>
-                                <div
-                                    :style="{ 'max-height': valuePayment === 'paypal' ? '1000px' : '0' }"
-                                    :class="[valuePayment === 'paypal' ?'m-4':'', 'item']"
-                                >
-                                    <span>Connect your PayPal account and use it to pay your bills. You'll be
-                                        redirected to PayPal to add your billing information.</span>
-                                    <div class="w-full flex justify-end gap-3 mt-4">
-                                        <a-button block style="max-width: 40%;">
-                                            Pay with<strong class="text-prim-100"><i>&nbsp;Pay</i></strong><strong class="text-prim-90"><i>Pal</i></strong>
-                                        </a-button>
+                                <div :class="[valuePayment === 'paypal' ?'max-h-[1000px]':'max-h-0','item']">
+                                    <div class="m-4">
+                                        <span>Connect your PayPal account and use it to pay your bills. You'll be
+                                            redirected to PayPal to add your billing information.</span>
+                                        <div class="w-full flex justify-end gap-3 mt-4">
+                                            <a-button block class="max-w-[40%]">
+                                                Pay with<strong class="text-prim-100"><i>&nbsp;Pay</i></strong><strong class="text-prim-90"><i>Pal</i></strong>
+                                            </a-button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -261,8 +255,8 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            <h5>${{valueBilling.toFixed(2)}}</h5>
-                            <p>billed every {{valueBilling===25 ? '30 day':'1 year'}}</p>
+                            <h5>${{ valueBilling.toFixed(2) }}</h5>
+                            <p>billed every {{ valueBilling===25 ? '30 day':'1 year' }}</p>
                         </div>
                     </div>
                     <div
@@ -273,8 +267,8 @@
                         <a-icon v-if="showPlandetail" type="up" />
                         <a-icon v-else type="down" />
                     </div>
-                    <div class="item" :style="{ 'max-height': showPlandetail ? '500px' : '0' }">
-                        <div class="p-4 bg-prim-5  border-y border-prim-10">
+                    <div :class="[showPlandetail ?'max-h-[1000px]':'max-h-0','item']">
+                        <div class="p-4 bg-prim-5  border-y border-prim-10 ">
                             <ul style="list-style: inside;">
                                 <li><strong>2 staff members</strong></li>
                                 <li>Up to <strong>1,000 locations</strong></li>
@@ -286,7 +280,7 @@
                     <div class="p-4">
                         <div class="flex justify-between mb-4">
                             <h5>Total</h5>
-                            <h5>${{valueBilling.toFixed(2)}} USD + tax</h5>
+                            <h5>${{ valueBilling.toFixed(2) }} USD + tax</h5>
                         </div>
                         <a-button block disabled>
                             Subscribe
@@ -361,6 +355,7 @@
                     expires:
                         [{ required: true, message: 'Please input your Expires!' }],
                 },
+                styleButton: '!bg-[#3b3f3f] !text-white !border-none',
             };
         },
         methods: {
